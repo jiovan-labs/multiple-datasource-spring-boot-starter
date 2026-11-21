@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.multipledatasource.druid;
+package com.jiovan.spring.starter.multipledatasource.druid;
 
 
 import jakarta.annotation.Nonnull;
@@ -67,6 +67,11 @@ public class DruidFilterConfiguration {
     public static final String WALL_CONFIG = "druidWallConfig";    // $NON-NLS-1$
     public static final String WALL_FILTER = "druidWallFilter";    // $NON-NLS-1$
 
+    /**
+     * Returns a {@link com.alibaba.druid.filter.config.ConfigFilter} bound from the {@code FILTER_CONFIG_PREFIX} configuration prefix
+     *
+     * @return the {@link com.alibaba.druid.filter.config.ConfigFilter}
+     */
     @Bean(name = CONFIG_FILTER)
     @ConfigurationProperties(FILTER_CONFIG_PREFIX)
     @ConditionalOnProperty(prefix = FILTER_CONFIG_PREFIX, name = "enabled")
@@ -75,6 +80,11 @@ public class DruidFilterConfiguration {
         return new ConfigFilter();
     }
 
+    /**
+     * Returns a {@link com.alibaba.druid.filter.stat.StatFilter} bound from the {@code FILTER_STAT_PREFIX} configuration prefix
+     *
+     * @return the {@link com.alibaba.druid.filter.stat.StatFilter}
+     */
     @Bean(name = STAT_FILTER)
     @ConfigurationProperties(FILTER_STAT_PREFIX)
     @ConditionalOnProperty(prefix = FILTER_STAT_PREFIX, name = "enabled")
@@ -83,6 +93,11 @@ public class DruidFilterConfiguration {
         return new StatFilter();
     }
 
+    /**
+     * Returns an {@link com.alibaba.druid.filter.encoding.EncodingConvertFilter} bound from the {@code FILTER_ENCODING_PREFIX} configuration prefix
+     *
+     * @return the {@link com.alibaba.druid.filter.encoding.EncodingConvertFilter}
+     */
     @Bean(name = ENCODING_CONVERT_FILTER)
     @ConfigurationProperties(FILTER_ENCODING_PREFIX)
     @ConditionalOnProperty(prefix = FILTER_ENCODING_PREFIX, name = "enabled")
@@ -91,6 +106,11 @@ public class DruidFilterConfiguration {
         return new EncodingConvertFilter();
     }
 
+    /**
+     * Returns a {@link com.alibaba.druid.filter.logging.Slf4jLogFilter} implemented by a composite SLF4J log filter and bound from the {@code FILTER_SLF4J_PREFIX} configuration prefix
+     *
+     * @return the {@link com.alibaba.druid.filter.logging.Slf4jLogFilter}
+     */
     @Bean(name = SLF4J_FILTER)
     @ConfigurationProperties(FILTER_SLF4J_PREFIX)
     @ConditionalOnProperty(prefix = FILTER_SLF4J_PREFIX, name = "enabled")
@@ -100,6 +120,11 @@ public class DruidFilterConfiguration {
         return new DruidCompositeSlf4jFilter();
     }
 
+    /**
+     * Returns a {@link com.alibaba.druid.filter.logging.Log4jFilter} implemented by a composite Log4j log filter and bound from the {@code FILTER_LOG4J_PREFIX} configuration prefix
+     *
+     * @return the {@link com.alibaba.druid.filter.logging.Log4jFilter}
+     */
     @Bean(name = LOG4J_FILTER)
     @ConfigurationProperties(FILTER_LOG4J_PREFIX)
     @ConditionalOnProperty(prefix = FILTER_LOG4J_PREFIX, name = "enabled")
@@ -109,6 +134,11 @@ public class DruidFilterConfiguration {
         return new DruidCompositeLog4jFilter();
     }
 
+    /**
+     * Returns a {@link com.alibaba.druid.filter.logging.Log4j2Filter} implemented by a composite Log4j2 log filter and bound from the {@code FILTER_LOG4J2_PREFIX} configuration prefix
+     *
+     * @return the {@link com.alibaba.druid.filter.logging.Log4j2Filter}
+     */
     @Bean(name = LOG4J2_FILTER)
     @ConfigurationProperties(FILTER_LOG4J2_PREFIX)
     @ConditionalOnProperty(prefix = FILTER_LOG4J2_PREFIX, name = "enabled")
@@ -118,6 +148,11 @@ public class DruidFilterConfiguration {
         return new DruidCompositeLog4j2Filter();
     }
 
+    /**
+     * Returns a {@link com.alibaba.druid.filter.logging.CommonsLogFilter} implemented by a composite commons logging filter and bound from the {@code FILTER_COMMONS_LOG_PREFIX} configuration prefix
+     *
+     * @return the {@link com.alibaba.druid.filter.logging.CommonsLogFilter}
+     */
     @Bean(name = COMMONS_LOG_FILTER)
     @ConfigurationProperties(FILTER_COMMONS_LOG_PREFIX)
     @ConditionalOnProperty(prefix = FILTER_COMMONS_LOG_PREFIX, name = "enabled")
@@ -127,6 +162,11 @@ public class DruidFilterConfiguration {
         return new DruidCompositeCommonsLogFilter();
     }
 
+    /**
+     * Returns a {@link com.alibaba.druid.wall.WallConfig} bound from the {@code FILTER_WALL_CONFIG_PREFIX} configuration prefix
+     *
+     * @return the {@link com.alibaba.druid.wall.WallConfig}
+     */
     @Bean(name = WALL_CONFIG)
     @ConfigurationProperties(FILTER_WALL_CONFIG_PREFIX)
     @ConditionalOnProperty(prefix = FILTER_WALL_PREFIX, name = "enabled")
@@ -135,6 +175,13 @@ public class DruidFilterConfiguration {
         return new WallConfig();
     }
 
+    /**
+     * Returns a {@link com.alibaba.druid.wall.WallFilter} configured with the given wall config
+     *
+     * @param wallConfig the wall configuration applied to the filter
+     *
+     * @return the configured {@link com.alibaba.druid.wall.WallFilter}
+     */
     @Bean(name = WALL_FILTER)
     @ConfigurationProperties(FILTER_WALL_PREFIX)
     @ConditionalOnProperty(prefix = FILTER_WALL_PREFIX, name = "enabled")

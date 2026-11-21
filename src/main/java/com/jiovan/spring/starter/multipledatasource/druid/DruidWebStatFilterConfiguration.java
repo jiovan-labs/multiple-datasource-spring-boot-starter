@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.multipledatasource.druid;
+package com.jiovan.spring.starter.multipledatasource.druid;
 
 
 import java.util.Collections;
@@ -28,7 +28,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import com.alibaba.druid.support.jakarta.WebStatFilter;
-import cn.unikue.commonplexus.javaseutil.util.StringUtilsWraps;
+import com.jiovan.plexus.common.toolkit.util.StringUtilsWraps;
 
 
 /**
@@ -43,6 +43,13 @@ public class DruidWebStatFilterConfiguration {
     public static final String WEB_STAT_FILTER = "druidWebStatFilterRegistration";    // $NON-NLS-1$
     private static final String DEFAULT_EXCLUSIONS = "*.3gp,*.7z,*.aac,*.ape,*.asf,*.avi,*.bmp,*.css,*.doc,*.docx,*.eot,*.flac,*.flv,*.gif,*.gz,*.ico,*.jpeg,*.jpg,*.js,*.less,*.log,*.map,*.mkv,*.mp3,*.mp4,*.ogg,*.pdf,*.png,*.ppt,*.pptx,*.psd,*.rar,*.rmvb,*.rtf,*.svg,*.swf,*.tar,*.tiff,*.ttf,*.txt,*.wav,*.wma,*.wmv,*.woff,*.woff2,*.xls,*.xlsx,*.xml,*.yml,*.zip";    // $NON-NLS-1$
 
+    /**
+     * Returns a {@link org.springframework.boot.web.servlet.FilterRegistrationBean} registering a Druid {@link com.alibaba.druid.support.http.WebStatFilter} configured with the URL pattern, exclusions and session and profile statistics settings from the Druid stat properties
+     *
+     * @param properties the Druid stat properties supplying the web stat filter settings
+     *
+     * @return the {@link org.springframework.boot.web.servlet.FilterRegistrationBean} for the web stat filter
+     */
     @Bean(name = WEB_STAT_FILTER)
     @ConditionalOnBean(value = DruidStatProperties.class)
     @ConditionalOnMissingBean(value = WebStatFilter.class, parameterizedContainer = FilterRegistrationBean.class)

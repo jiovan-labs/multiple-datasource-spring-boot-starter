@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Unikue Ltd. All rights reserved.
+ * Copyright (c) 2020 Jiovan Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.multipledatasource.druid;
+package com.jiovan.spring.starter.multipledatasource.druid;
 
 
 import jakarta.annotation.Nullable;
-import com.alibaba.druid.filter.logging.CommonsLogFilter;
+import com.alibaba.druid.filter.logging.Slf4jLogFilter;
 import com.alibaba.druid.sql.SQLUtils;
-import cn.unikue.commonplexus.javaseutil.util.StringUtilsWraps;
+import com.jiovan.plexus.common.toolkit.util.StringUtilsWraps;
 
 
 /**
- * Druid filter for commons-log
+ * Druid filter for slf4j
  *
  * @author David Hsing
  */
-public class DruidCompositeCommonsLogFilter extends CommonsLogFilter {
-    public DruidCompositeCommonsLogFilter() {
+public class DruidCompositeSlf4jFilter extends Slf4jLogFilter {
+    public DruidCompositeSlf4jFilter() {
         super.setStatementSqlFormatOption(new SQLUtils.FormatOption(false, false));
     }
 

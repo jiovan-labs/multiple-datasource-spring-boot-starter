@@ -1,17 +1,17 @@
 # Multiple Datasource for Spring Boot Starter
-# Copyright (c) 2020 Unikue Ltd. All rights reserved.
-# https://unikue.cn
+# Copyright (c) 2020 Jiovan Ltd. All rights reserved.
+# https://jiovan.com
 
-cn.unikue.springstarter.multipledatasource.config.DruidDataSourcePreConfiguration
-cn.unikue.springstarter.multipledatasource.config.PrimaryDataSourceJdbcConfiguration
-cn.unikue.springstarter.multipledatasource.config.PrimaryDataSourceJpaConfiguration
-cn.unikue.springstarter.multipledatasource.config.PrimaryDataSourceRepositoryConfiguration
-cn.unikue.springstarter.multipledatasource.config.PrimaryDataSourceMybatisConfiguration
-cn.unikue.springstarter.multipledatasource.config.SecondaryDataSourceJdbcConfiguration
-cn.unikue.springstarter.multipledatasource.config.SecondaryDataSourceJpaConfiguration
-cn.unikue.springstarter.multipledatasource.config.SecondaryDataSourceRepositoryConfiguration
-cn.unikue.springstarter.multipledatasource.config.SecondaryDataSourceMybatisConfiguration
-cn.unikue.springstarter.multipledatasource.config.TertiaryDataSourceJdbcConfiguration
-cn.unikue.springstarter.multipledatasource.config.TertiaryDataSourceJpaConfiguration
-cn.unikue.springstarter.multipledatasource.config.TertiaryDataSourceRepositoryConfiguration
-cn.unikue.springstarter.multipledatasource.config.TertiaryDataSourceMybatisConfiguration
+com.jiovan.spring.starter.multipledatasource.config.DruidDataSourcePreConfiguration
+com.jiovan.spring.starter.multipledatasource.config.PrimaryDataSourceJdbcConfiguration
+com.jiovan.spring.starter.multipledatasource.config.PrimaryDataSourceJpaConfiguration
+com.jiovan.spring.starter.multipledatasource.config.PrimaryDataSourceRepositoryConfiguration
+com.jiovan.spring.starter.multipledatasource.config.PrimaryDataSourceMybatisConfiguration
+com.jiovan.spring.starter.multipledatasource.config.SecondaryDataSourceJdbcConfiguration
+com.jiovan.spring.starter.multipledatasource.config.SecondaryDataSourceJpaConfiguration
+com.jiovan.spring.starter.multipledatasource.config.SecondaryDataSourceRepositoryConfiguration
+com.jiovan.spring.starter.multipledatasource.config.SecondaryDataSourceMybatisConfiguration
+com.jiovan.spring.starter.multipledatasource.config.TertiaryDataSourceJdbcConfiguration
+com.jiovan.spring.starter.multipledatasource.config.TertiaryDataSourceJpaConfiguration
+com.jiovan.spring.starter.multipledatasource.config.TertiaryDataSourceRepositoryConfiguration
+com.jiovan.spring.starter.multipledatasource.config.TertiaryDataSourceMybatisConfiguration

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.multipledatasource.druid;
+package com.jiovan.spring.starter.multipledatasource.druid;
 
 
 import java.util.Collections;
@@ -27,7 +27,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import com.alibaba.druid.support.jakarta.StatViewServlet;
-import cn.unikue.commonplexus.javaseutil.util.StringUtilsWraps;
+import com.jiovan.plexus.common.toolkit.util.StringUtilsWraps;
 
 
 /**
@@ -42,6 +42,13 @@ public class DruidStatViewServletConfiguration {
     public static final String STAT_VIEW_SERVLET = "druidStatViewServletRegistration";    // $NON-NLS-1$
     private static final String DEFAULT_ALLOW_IP = "127.0.0.1";    // $NON-NLS-1$
 
+    /**
+     * Returns a {@link org.springframework.boot.web.servlet.ServletRegistrationBean} registering a Druid {@link com.alibaba.druid.support.http.StatViewServlet} configured with the URL pattern, access control, login credentials and reset setting from the Druid stat properties
+     *
+     * @param properties the Druid stat properties supplying the stat view servlet settings
+     *
+     * @return the {@link org.springframework.boot.web.servlet.ServletRegistrationBean} for the stat view servlet
+     */
     @Bean(name = STAT_VIEW_SERVLET)
     @ConditionalOnBean(value = DruidStatProperties.class)
     @ConditionalOnMissingBean(value = StatViewServlet.class, parameterizedContainer = ServletRegistrationBean.class)

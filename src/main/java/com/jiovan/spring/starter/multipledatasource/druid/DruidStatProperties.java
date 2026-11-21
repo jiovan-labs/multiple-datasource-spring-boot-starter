@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.multipledatasource.druid;
+package com.jiovan.spring.starter.multipledatasource.druid;
 
 
 import java.io.Serializable;
@@ -41,7 +41,7 @@ public class DruidStatProperties implements Serializable {
 
 
     /**
-     * Properties for {@code cn.unikue.springstarter.multipledatasource.druid.DruidStatProperties.StatViewServlet}
+     * Properties for {@code com.jiovan.spring.starter.multipledatasource.druid.DruidStatProperties.StatViewServlet}
      *
      * @author David Hsing
      */
@@ -60,7 +60,7 @@ public class DruidStatProperties implements Serializable {
 
 
     /**
-     * Properties for {@code cn.unikue.springstarter.multipledatasource.druid.DruidStatProperties.WebStatFilter}
+     * Properties for {@code com.jiovan.spring.starter.multipledatasource.druid.DruidStatProperties.WebStatFilter}
      *
      * @author David Hsing
      */

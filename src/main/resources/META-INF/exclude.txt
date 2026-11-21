@@ -1,9 +1,9 @@
 Multiple Datasource for Spring Boot Starter
-Copyright (c) 2020 Unikue Ltd. All rights reserved.
-https://unikue.cn
+Copyright (c) 2020 Jiovan Ltd. All rights reserved.
+https://jiovan.com
 
 # spring.autoconfigure.exclude ('+' means better, '-' means must)
-- org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-- org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
-- org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration
-- org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+- org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
+- org.springframework.boot.jdbc.autoconfigure.DataSourceTransactionManagerAutoConfiguration
+- org.springframework.boot.jdbc.autoconfigure.XADataSourceAutoConfiguration
+- org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration

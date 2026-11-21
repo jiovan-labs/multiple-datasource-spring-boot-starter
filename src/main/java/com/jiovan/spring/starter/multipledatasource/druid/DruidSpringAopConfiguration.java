@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.multipledatasource.druid;
+package com.jiovan.spring.starter.multipledatasource.druid;
 
 
 import jakarta.annotation.Nonnull;
@@ -42,12 +42,25 @@ public class DruidSpringAopConfiguration {
     public static final String METHOD_POINTCUT_ADVISOR = "druidMethodPointcutAdvisor";    // $NON-NLS-1$
     public static final String ADVISOR_PROXY_CREATOR = "druidAdvisorProxyCreator";    // $NON-NLS-1$
 
+    /**
+     * Returns an {@link org.aopalliance.aop.Advice} backed by a Druid stat interceptor
+     *
+     * @return the {@link org.aopalliance.aop.Advice}
+     */
     @Bean(name = STAT_INTERCEPTOR_ADVICE)
     @ConditionalOnMissingBean(name = STAT_INTERCEPTOR_ADVICE)
     public Advice statInterceptorAdvice() {
         return new DruidStatInterceptor();
     }
 
+    /**
+     * Returns an {@link org.springframework.aop.Advisor} that matches the AOP patterns from the Druid stat properties and applies the given advice
+     *
+     * @param advice the Druid stat interceptor advice applied by the advisor
+     * @param properties the Druid stat properties supplying the AOP patterns
+     *
+     * @return the {@link org.springframework.aop.Advisor}
+     */
     @Bean(name = METHOD_POINTCUT_ADVISOR)
     @ConditionalOnBean(name = STAT_INTERCEPTOR_ADVICE, value = DruidStatProperties.class)
     @ConditionalOnMissingBean(name = METHOD_POINTCUT_ADVISOR)
@@ -55,6 +68,11 @@ public class DruidSpringAopConfiguration {
         return new RegexpMethodPointcutAdvisor(properties.getAopPatterns(), advice);
     }
 
+    /**
+     * Returns a {@link org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator} configured to proxy target classes instead of interfaces
+     *
+     * @return the {@link org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator}
+     */
     @Bean(name = ADVISOR_PROXY_CREATOR)
     @ConditionalOnMissingBean(name = ADVISOR_PROXY_CREATOR)
     @ConditionalOnProperty(name = "spring.aop.auto", havingValue = "false")

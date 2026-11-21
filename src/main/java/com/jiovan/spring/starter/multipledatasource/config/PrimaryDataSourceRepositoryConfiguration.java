@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Unikue Ltd. All rights reserved.
+ * Copyright (c) 2020 Jiovan Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.multipledatasource.config;
+package com.jiovan.spring.starter.multipledatasource.config;
 
 
 import javax.sql.DataSource;
@@ -23,18 +23,18 @@ import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration;
+import org.springframework.boot.jdbc.autoconfigure.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.jdbc.autoconfigure.XADataSourceAutoConfiguration;
+import org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.orm.jpa.JpaDialect;
 import org.springframework.stereotype.Repository;
-import cn.unikue.commonplexus.springcondition.annotation.ConditionalOnAllBooleanProperties;
-import cn.unikue.commonplexus.springcondition.annotation.ConditionalOnAnnotation;
+import com.jiovan.plexus.spring.condition.annotation.ConditionalOnAllBooleanProperties;
+import com.jiovan.plexus.spring.condition.annotation.ConditionalOnAnnotation;
 
 
 /**
@@ -44,7 +44,7 @@ import cn.unikue.commonplexus.springcondition.annotation.ConditionalOnAnnotation
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnAllBooleanProperties(value = {
-    @ConditionalOnBooleanProperty(prefix = "spring.multiple-datasource", name = "enabled", matchIfMissing = true),
+    @ConditionalOnBooleanProperty(prefix = "jiovan.multiple-datasource", name = "enabled", matchIfMissing = true),
     @ConditionalOnBooleanProperty(prefix = PrimaryDataSourceJpaConfiguration.PROPERTIES_PREFIX, name = "jpa-enabled", matchIfMissing = true),
     @ConditionalOnBooleanProperty(prefix = PrimaryDataSourceJpaConfiguration.PROPERTIES_PREFIX, name = "repository-enabled", matchIfMissing = true)
 })

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Unikue Ltd. All rights reserved.
+ * Copyright (c) 2020 Jiovan Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.unikue.springstarter.multipledatasource.config;
+package com.jiovan.spring.starter.multipledatasource.config;
 
 
 import javax.sql.DataSource;
@@ -34,15 +34,15 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBooleanProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.EntityManagerFactoryBuilderCustomizer;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
-import org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers;
+import org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration;
+import org.springframework.boot.jdbc.autoconfigure.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.jdbc.autoconfigure.XADataSourceAutoConfiguration;
+import org.springframework.boot.jpa.autoconfigure.EntityManagerFactoryBuilderCustomizer;
+import org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration;
+import org.springframework.boot.jpa.autoconfigure.JpaProperties;
+import org.springframework.boot.transaction.autoconfigure.TransactionManagerCustomizers;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+import org.springframework.boot.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -57,28 +57,29 @@ import org.springframework.orm.jpa.persistenceunit.PersistenceUnitManager;
 import org.springframework.orm.jpa.persistenceunit.PersistenceUnitPostProcessor;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import cn.unikue.commonplexus.springcondition.annotation.ConditionalOnAllBooleanProperties;
-import cn.unikue.commonplexus.springutil.util.ClassPathWraps;
-import cn.unikue.commonplexus.springutil.util.PropertyBinderWraps;
-import cn.unikue.springstarter.datasourcebuilder.composer.DataSourceBuilder;
-import cn.unikue.springstarter.datasourcebuilder.util.JpaConfigurationUtils;
+import com.jiovan.plexus.spring.condition.annotation.ConditionalOnAllBooleanProperties;
+import com.jiovan.plexus.spring.toolkit.util.ClassPathWraps;
+import com.jiovan.plexus.spring.toolkit.util.PropertyBinderWraps;
+import com.jiovan.spring.starter.datasourcebuilder.composer.DataSourceBuilder;
+import com.jiovan.spring.starter.datasourcebuilder.util.JpaConfigurationUtils;
 
 
 /**
  * Primary datasource configuration for Spring Data JPA
  *
  * @author David Hsing
- * @see org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration
- * @see org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration
+ *
+ * @see org.springframework.boot.hibernate.autoconfigure.HibernateJpaConfiguration
+ * @see org.springframework.boot.jpa.autoconfigure.JpaBaseConfiguration
  * @see org.springframework.transaction.interceptor.TransactionAspectSupport
  * @see org.springframework.transaction.support.DefaultTransactionDefinition
- * @reference "https://blog.csdn.net/tianyaleixiaowu/article/details/78905149"
- * @reference "https://blog.csdn.net/haiyan_qi/article/details/78293300"
- * @reference "https://www.cnblogs.com/chen-msg/p/7485701.html"
+ * @see "https://blog.csdn.net/tianyaleixiaowu/article/details/78905149"
+ * @see "https://blog.csdn.net/haiyan_qi/article/details/78293300"
+ * @see "https://www.cnblogs.com/chen-msg/p/7485701.html"
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnAllBooleanProperties(value = {
-    @ConditionalOnBooleanProperty(prefix = "spring.multiple-datasource", name = "enabled", matchIfMissing = true),
+    @ConditionalOnBooleanProperty(prefix = "jiovan.multiple-datasource", name = "enabled", matchIfMissing = true),
     @ConditionalOnBooleanProperty(prefix = PrimaryDataSourceJpaConfiguration.PROPERTIES_PREFIX, name = "jpa-enabled", matchIfMissing = true)
 })
 @ConditionalOnClass(value = {DataSource.class, JdbcOperations.class, JpaDialect.class, JpaRepository.class})
@@ -103,6 +104,11 @@ public class PrimaryDataSourceJpaConfiguration {
     public static final String ENTITY_PACKAGE = "**.domain.primary.rdbms";    // $NON-NLS-1$
     private static final String XA_PREFIX = PrimaryDataSourceJdbcConfiguration.PROPERTIES_PREFIX + ".xa";    // $NON-NLS-1$
 
+    /**
+     * Returns a {@link org.springframework.boot.jpa.autoconfigure.JpaProperties} bound from the {@code PROPERTIES_PREFIX} configuration prefix
+     *
+     * @return a new {@link org.springframework.boot.jpa.autoconfigure.JpaProperties}
+     */
     @Primary
     @Bean(name = JPA_PROPERTIES)
     @ConditionalOnMissingBean(name = JPA_PROPERTIES)
@@ -111,6 +117,16 @@ public class PrimaryDataSourceJpaConfiguration {
         return new JpaProperties();
     }
 
+    /**
+     * Returns a default {@link org.springframework.orm.jpa.persistenceunit.PersistenceUnitManager} configured with the entity package, optional persistence XML resource, JTA detection and optional post processor
+     *
+     * @param dataSource the optional qualified data source used by the persistence unit
+     * @param processor the optional persistence unit post processor
+     * @param loader the resource loader used to locate persistence XML and scan entity classes
+     * @param environment the environment used to detect XA configuration
+     *
+     * @return a default {@link org.springframework.orm.jpa.persistenceunit.PersistenceUnitManager} for the qualified datasource
+     */
     @Primary
     @Bean(name = PERSISTENCE_UNIT_MANAGER)
     @ConditionalOnMissingBean(name = PERSISTENCE_UNIT_MANAGER)
@@ -123,6 +139,16 @@ public class PrimaryDataSourceJpaConfiguration {
         return JpaConfigurationUtils.defaultPersistenceUnitManager(PERSISTENCE_UNIT, null, dataSource, packagesToScan, null, xmlLocations, jta, loader, SharedCacheMode.ENABLE_SELECTIVE, ValidationMode.AUTO, postProcessors);
     }
 
+    /**
+     * Returns an {@link org.springframework.boot.jpa.EntityManagerFactoryBuilder} built from the Hibernate JPA vendor adapter, the persistence unit manager and the JPA properties, with an optional bootstrap executor and customizer applied
+     *
+     * @param manager the persistence unit manager used by the builder
+     * @param executor the optional async task executor used for bootstrap
+     * @param customizer the optional customizer applied to the builder
+     * @param properties the JPA properties supplying the vendor adapter and property map
+     *
+     * @return the configured {@link org.springframework.boot.jpa.EntityManagerFactoryBuilder}
+     */
     @Primary
     @Bean(name = ENTITY_MANAGER_FACTORY_BUILDER)
     @ConditionalOnBean(name = {PERSISTENCE_UNIT_MANAGER, JPA_PROPERTIES})
@@ -136,6 +162,16 @@ public class PrimaryDataSourceJpaConfiguration {
         return builder;
     }
 
+    /**
+     * Returns a {@link org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean} built from the given builder, qualified data source, JPA properties and JTA setting
+     *
+     * @param builder the entity manager factory builder
+     * @param dataSource the qualified data source for the entity manager factory
+     * @param properties the JPA properties supplying the property map
+     * @param environment the environment used to detect XA configuration
+     *
+     * @return the configured {@link org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean}
+     */
     @Primary
     @Bean(name = ENTITY_MANAGER_FACTORY_BEAN)
     @ConditionalOnBean(name = {ENTITY_MANAGER_FACTORY_BUILDER, PrimaryDataSourceJdbcConfiguration.DATA_SOURCE, JPA_PROPERTIES})
@@ -145,7 +181,13 @@ public class PrimaryDataSourceJpaConfiguration {
     }
 
     /**
-     * @reference "https://stackoverflow.com/questions/28817120/how-to-inject-multiple-jpa-entitymanager-persistence-units-when-using-spring"
+     * Returns the {@link jakarta.persistence.EntityManagerFactory} exposed by the given factory bean
+     *
+     * @param factoryBean the entity manager factory bean holding the built persistence unit
+     *
+     * @return the entity manager factory, or {@code null} if the factory bean has not been initialized
+     *
+     * @see "https://stackoverflow.com/questions/28817120/how-to-inject-multiple-jpa-entitymanager-persistence-units-when-using-spring"
      */
     @Primary
     @Bean(name = ENTITY_MANAGER_FACTORY)
@@ -156,6 +198,13 @@ public class PrimaryDataSourceJpaConfiguration {
         return factoryBean.getObject();
     }
 
+    /**
+     * Returns a new {@link jakarta.persistence.EntityManager} created by the given entity manager factory
+     *
+     * @param factory the entity manager factory creating the entity manager
+     *
+     * @return a new {@link jakarta.persistence.EntityManager}
+     */
     @Primary
     @Bean(name = ENTITY_MANAGER)
     @ConditionalOnBean(name = ENTITY_MANAGER_FACTORY)
@@ -164,6 +213,15 @@ public class PrimaryDataSourceJpaConfiguration {
         return factory.createEntityManager();
     }
 
+    /**
+     * Returns a JPA {@link org.springframework.transaction.TransactionManager} built from the entity manager factory with the available transaction manager customizers applied
+     *
+     * @param builder the data source builder creating the transaction manager
+     * @param factory the entity manager factory managed by the transaction manager
+     * @param customizers the provider of transaction manager customizers
+     *
+     * @return a JPA {@link org.springframework.transaction.TransactionManager}
+     */
     @Primary
     @Bean(name = PrimaryDataSourceJdbcConfiguration.TRANSACTION_MANAGER)
     @ConditionalOnBooleanProperty(prefix = PrimaryDataSourceJpaConfiguration.PROPERTIES_PREFIX, name = "jpa-transaction", matchIfMissing = true)
